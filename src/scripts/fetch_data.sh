@@ -35,3 +35,5 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
     -H "Actions: view, Ir para a Western Union, https://www.westernunion.com/br/en/home.html" \
     -d "[$topic] 1 BRL = $wumessage ARS"
 }
+
+exit 0
