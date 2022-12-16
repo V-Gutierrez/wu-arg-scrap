@@ -1,4 +1,4 @@
-#!/bin/sh/
+#!/bin/sh
 
 topic='WUARGENTINA'
 subscribersTarget='WUARGENTINA'
