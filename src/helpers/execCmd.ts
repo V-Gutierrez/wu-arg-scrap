@@ -10,11 +10,11 @@ function execCmd(cmd: string) {
   console.log('Running: ', cmd)
   return exec(cmd, (error, stdout, stderr) => {
     if (error)
-      console.log('[Error]: ', error.message)
+      console.log('[Runtime Error]: ', error.message)
     if (stderr)
-      console.log('[STDError]', stderr)
+      console.log('[STDEERR]', stderr)
     if (stdout)
-      console.log('[STDOut]:', stdout)
+      console.log('[STDOUT]:', stdout)
   })
 }
 
