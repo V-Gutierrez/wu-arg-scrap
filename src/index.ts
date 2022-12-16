@@ -8,7 +8,6 @@ const JOBS = {
     cmd: `source ${__dirname}/scripts/fetch_data.sh`
   }
 }
-
 console.log(`Server is running and has currently ${Object.keys(JOBS).length} jobs running.`)
 
 Object.values(JOBS).forEach(job => {
