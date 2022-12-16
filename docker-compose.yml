@@ -2,8 +2,6 @@ services:
   wu-node:
     build: '.'
     command: npm run start
-    ports:
-      - '5000:5000'
     volumes:
       - ./:/usr/app
     container_name: 'wu-node'
