@@ -29,6 +29,5 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   --data-raw '{"header_request":{"version":"0.5","request_type":"PRICECATALOG"},"sender":{"client":"WUCOM","channel":"WWEB","funds_in":"EB","curr_iso3":"BRL","cty_iso2_ext":"BR","send_amount":"200"},"receiver":{"curr_iso3":"ARS","cty_iso2_ext":"AR","cty_iso2":"AR"}}' \
   --compressed | grep -o '"fx_rate":[[:digit:]]....' | tr -d 'fx_rate:' | tr -d '"' | {
   read wumessage
-  echo "$wumessage"
   curl -d "[$topic] 1BRL = $wumessage ARS" ntfy.sh/$subscribersTarget
 }
