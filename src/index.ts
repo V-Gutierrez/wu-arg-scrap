@@ -4,7 +4,7 @@ import 'dotenv/config'
 
 const JOBS = {
   WESTERN_UNION: {
-    cron: '* */30 * * * *',
+    cron: '*/30 * * * *',
     cmd: `source ${__dirname}/scripts/fetch_data.sh | grep -o '"fx_rate":[[:digit:]]....'`
   }
 }
