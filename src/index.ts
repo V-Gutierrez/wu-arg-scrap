@@ -12,6 +12,6 @@ const JOBS = {
 console.log(`Server is running and has currently ${Object.keys(JOBS).length} jobs running.`)
 
 /* Running the fetch_data.sh script every 30 minutes. */
-cron.schedule(JOBS.WESTERN_UNION.cron, async () => {
+cron.schedule(JOBS.WESTERN_UNION.cron, () => {
   execCmd(JOBS.WESTERN_UNION.cmd)
 })
