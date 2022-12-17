@@ -4,7 +4,7 @@ import 'dotenv/config'
 
 const JOBS = {
   WESTERN_UNION_ARS_BRL: {
-    cron: '*/30 * * * *',
+    cron: '*/30 8-22 * * *',
     cmd: `source ${__dirname}/scripts/fetch_data.sh`
   }
 }
