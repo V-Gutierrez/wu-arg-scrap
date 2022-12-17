@@ -3,12 +3,15 @@ import execCmd from './helpers/execCmd';
 import 'dotenv/config'
 
 const JOBS = {
-  WESTERN_UNION_ARS_BRL: {
-    cron: '*/30 8-22 * * *',
-    cmd: `source ${__dirname}/scripts/fetch_data.sh`
+  WESTERN_UNION_BRL_ARS: {
+    cron: '*/60 8-22 * * *',
+    cmd: `source ${__dirname}/scripts/BRL_ARS.sh --target WU-BRL-ARS`
   }
 }
-console.log(`Server is running and has currently ${Object.keys(JOBS).length} jobs running.`)
+
+const JOBS_AMOUNT = Object.keys(JOBS).length
+
+console.log(`Server is online and has currently ${JOBS_AMOUNT} jobs running.`)
 
 Object.values(JOBS).forEach(job => {
   cron.schedule(job.cron, () => {
