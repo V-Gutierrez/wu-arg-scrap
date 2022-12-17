@@ -6,6 +6,10 @@ const JOBS = {
   WESTERN_UNION_BRL_ARS: {
     cron: '*/60 8-22 * * *',
     cmd: `source ${__dirname}/scripts/BRL_ARS.sh --target WU-BRL-ARS`
+  },
+  WESTERN_UNION_BRL_USD: {
+    cron: '*/60 8-22 * * *',
+    cmd: `source ${__dirname}/scripts/BRL_USD.sh --target WU-BRL-USD`
   }
 }
 

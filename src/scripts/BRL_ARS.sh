@@ -1,7 +1,8 @@
 #!/bin/sh
 
 TARGET=$2
-
+MESSAGE_TITLE="Western Union Companion - By Victor Gutierrez 🟢"
+TARGET_CURRENCY="ARS"
 
 curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   -H 'authority: www.westernunion.com' \
@@ -32,18 +33,18 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   read WUCURRENCYVALUE
   if test -z "$WUCURRENCYVALUE"; then
     echo "Current currency ($WUCURRENCYVALUE) value is missing, message was not sent."
-    #exit 111
+    exit 111
   else
     echo "Sending message to target $TARGET"
 
-    curl ntfy.sh/$TARGET \
-      -H "X-Title: Western Union Scrapper - By Victor Gutierrez 🟢" \
+    curl "ntfy.sh/$TARGET" \
+      -H "X-Title: $MESSAGE_TITLE" \
       -H "X-Priority: 5" \
       -H "Actions: view, Ir para a Western Union, https://www.westernunion.com/br/en/home.html" \
-      -d "[$TARGET] 1 BRL = $WUCURRENCYVALUE ARS" \
+      -d "[$TARGET] 1 BRL = $WUCURRENCYVALUE $TARGET_CURRENCY" \
       --progress-bar \
       --fail
   fi
 }
 
-#exit 0
+exit 0
