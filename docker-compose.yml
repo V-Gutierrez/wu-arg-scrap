@@ -5,4 +5,3 @@ services:
     volumes:
       - ./:/usr/app
     container_name: 'wu-node'
-    restart: always
