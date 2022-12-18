@@ -10,6 +10,10 @@ const JOBS = {
   WESTERN_UNION_BRL_USD: {
     cron: '*/60 8-22 * * *',
     cmd: `source ${__dirname}/scripts/BRL_USD.sh --target WU-BRL-USD`
+  },
+  HEALTH_CHECK: {
+    cron: '* * * * *',
+    cmd: `echo "[Health Check] - Online @ $(date)"`
   }
 }
 
