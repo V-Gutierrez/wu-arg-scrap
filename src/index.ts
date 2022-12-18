@@ -13,7 +13,7 @@ const JOBS = {
   },
   HEALTH_CHECK: {
     cron: '* * * * *',
-    cmd: `echo "[Health Check] - Online @ $(date)"`
+    cmd: `echo "[Health Check] - Online @ $(date)"; exit 0`
   }
 }
 
