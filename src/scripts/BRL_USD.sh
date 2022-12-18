@@ -37,6 +37,17 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   else
     echo "Sending message to target $TARGET"
 
+    ### Storage
+
+    if [[ ! -e "src/databases/$TARGET_CURRENCY.csv" ]]; then
+      touch "src/databases/$TARGET_CURRENCY.csv"
+      echo "BASE (BRL);PRICE ($TARGET_CURRENCY);DATE" >>"src/databases/$TARGET_CURRENCY.csv"
+    fi
+
+    echo "1 BRL; $WUCURRENCYVALUE $TARGET_CURRENCY; $(date)" >>"src/databases/$TARGET_CURRENCY.csv"
+
+    ### Storage
+
     curl "ntfy.sh/$TARGET" \
       -H "X-Title: $MESSAGE_TITLE" \
       -H "X-Priority: 5" \
