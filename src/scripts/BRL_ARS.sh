@@ -4,6 +4,8 @@ TARGET=$2
 MESSAGE_TITLE="Western Union Companion - By Victor Gutierrez 🟢"
 TARGET_CURRENCY="ARS"
 
+echo "Running Task for pair BRL_$TARGET_CURRENCY"
+
 curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   -H 'authority: www.westernunion.com' \
   -H 'accept: */*' \
