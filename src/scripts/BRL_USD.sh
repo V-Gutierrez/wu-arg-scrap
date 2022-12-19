@@ -30,7 +30,9 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   --data-raw '{"header_request":{"version":"0.5","request_type":"PRICECATALOG"},"sender":{"client":"WUCOM","channel":"WWEB","funds_in":"EB","curr_iso3":"BRL","cty_iso2_ext":"BR","send_amount":"100.00"},"receiver":{"curr_iso3":"USD","cty_iso2_ext":"US","cty_iso2":"US"}}' \
   --compressed \
   --progress-bar | grep -o '"fx_rate":[[:digit:]]....' | tr -d 'fx_rate:' | tr -d '"' | {
+
   read WUCURRENCYVALUE
+
   if test -z "$WUCURRENCYVALUE"; then
     echo "Current currency ($WUCURRENCYVALUE) value is missing, message was not sent."
     exit 111
@@ -38,14 +40,12 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
     echo "Sending message to target $TARGET"
 
     ### Storage
-
     if [[ ! -e "src/databases/$TARGET_CURRENCY.csv" ]]; then
       touch "src/databases/$TARGET_CURRENCY.csv"
       echo "BASE_BRL;PRICE_$TARGET_CURRENCY;DATE" >>"src/databases/$TARGET_CURRENCY.csv"
     fi
 
     echo "1 BRL; $WUCURRENCYVALUE $TARGET_CURRENCY; $(date "+%d-%m-%Y %T")" >>"src/databases/$TARGET_CURRENCY.csv"
-
     ### Storage
 
     curl "ntfy.sh/$TARGET" \
@@ -56,12 +56,9 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
       --progress-bar
 
     # Data Analysis
-
     echo "Sending data to data scripts with $TARGET_CURRENCY parameter"
     python3 -u "src/data_scripts/plot_csv_charts.py" "BRL_$TARGET_CURRENCY" "$TARGET_CURRENCY"
-
     # Data Analysis
-
   fi
 }
 
