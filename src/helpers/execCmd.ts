@@ -7,7 +7,6 @@ import { exec } from 'child_process'
  * @returns The child process
  */
 function execCmd(cmd: string) {
-  console.log('Running: ', cmd)
   return exec(cmd, (error, stdout, stderr) => {
     if (error)
       console.log('[Runtime Error]: ', error.message)
