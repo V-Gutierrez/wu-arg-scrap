@@ -12,9 +12,9 @@ function execCmd(cmd: string) {
     if (error)
       console.log('[Runtime Error]: ', error.message)
     if (stderr)
-      console.log('[STDEERR]', stderr)
+      console.log(stderr)
     if (stdout)
-      console.log('[STDOUT]:', stdout)
+      console.log(stdout)
   })
 }
 
