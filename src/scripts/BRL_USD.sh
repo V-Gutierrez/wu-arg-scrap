@@ -34,7 +34,7 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
   read WUCURRENCYVALUE
 
   if test -z "$WUCURRENCYVALUE"; then
-    echo "Current currency ($WUCURRENCYVALUE) value is missing, message was not sent."
+    echo "Current currency ($WUCURRENCYVALUE) value is missing, message was not sent and data procedures were not triggered."
     exit 111
   else
     echo "Sending message to target $TARGET"
