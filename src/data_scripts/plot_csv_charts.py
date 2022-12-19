@@ -10,8 +10,8 @@ import pandas as pd
 
 currency_pair = sys.argv[1]
 target_currency = sys.argv[2]
-file_path = p = Path(f"src/databases/{target_currency}.csv").resolve()
-
+file_path = Path(f"../databases/{target_currency}.csv").resolve()
+saving_path = Path(f"../data_outputs/{currency_pair}_chart.png").resolve()
 # Read the data from the CSV file
 
 columns = ["BASE_BRL", f"PRICE_{target_currency}", "DATE"]
@@ -32,7 +32,9 @@ plt.setp(ax.get_xticklabels(), rotation=90)
 # Create chart and save the plot
 ax.plot(df["DATE"], df[f"PRICE_{target_currency}"])
 plt.savefig(
-    f"src/data_outputs/{currency_pair}_chart.png",
+    saving_path,
     dpi=300,
     bbox_inches="tight"
 )
+
+print(f"Graph updated and generated | Saved to {saving_path}")
