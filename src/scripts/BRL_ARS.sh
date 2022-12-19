@@ -34,11 +34,11 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
 
   if test -z "$WUCURRENCYVALUE"; then
     echo "Current currency ($WUCURRENCYVALUE) value is missing, message was not sent."
-    #exit 111
+    exit 111
   else
     echo "Sending message to target $TARGET"
 
-    ### Storage and Data Analysis
+    ### Storage
 
     if [[ ! -e "src/databases/$TARGET_CURRENCY.csv" ]]; then
       touch "src/databases/$TARGET_CURRENCY.csv"
@@ -47,9 +47,7 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
 
     echo "1 BRL; $WUCURRENCYVALUE $TARGET_CURRENCY; $(date "+%d-%m-%Y %T")" >>"src/databases/$TARGET_CURRENCY.csv"
 
-    python3 -u "src/data_scripts/plot_csv_charts.py" "BRL_$TARGET_CURRENCY" "$TARGET_CURRENCY"
-
-    ### Storage and Data Analysis
+    ### Storage
 
     curl "ntfy.sh/$TARGET" \
       -H "X-Title: $MESSAGE_TITLE" \
@@ -58,7 +56,14 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
       -d "[$TARGET] 1 BRL = $WUCURRENCYVALUE $TARGET_CURRENCY" \
       --progress-bar \
       --fail
+
+    # Data Analysis
+
+    echo "Sending data to data scripts with $TARGET_CURRENCY parameter"
+    python3 -u "src/data_scripts/plot_csv_charts.py" "BRL_$TARGET_CURRENCY" "$TARGET_CURRENCY"
+
+    # Data Analysis
   fi
 }
 
-#exit 0
+exit 0

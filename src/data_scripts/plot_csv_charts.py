@@ -10,12 +10,11 @@ import pandas as pd
 
 currency_pair = sys.argv[1]
 target_currency = sys.argv[2]
-file_path = Path(f"../databases/{target_currency}.csv").resolve()
-saving_path = Path(f"../data_outputs/{currency_pair}_chart.png").resolve()
+file_path = Path(f"src/databases/{target_currency}.csv").absolute()
+saving_path = Path(f"src/data_outputs/{currency_pair}_chart.png").absolute()
+
 # Read the data from the CSV file
-
 columns = ["BASE_BRL", f"PRICE_{target_currency}", "DATE"]
-
 df = pd.read_csv(file_path, delimiter=";", usecols=columns)
 
 # Add axis labels and subplot labels
@@ -37,4 +36,6 @@ plt.savefig(
     bbox_inches="tight"
 )
 
-print(f"Graph updated and generated | Saved to {saving_path}")
+print(
+    f"Graph for BRL_{target_currency} updated and generated | Saved to {saving_path}"
+)
