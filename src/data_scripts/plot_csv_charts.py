@@ -26,7 +26,7 @@ ax.set(
     title=f"Exchange rate of {currency_pair}"
 )
 
-plt.setp(ax.get_xticklabels(), rotation=90)
+plt.setp(ax.get_xticklabels(), rotation=90, fontsize=8)
 
 # Create chart and save the plot
 ax.plot(df["DATE"], df[f"PRICE_{target_currency}"])
