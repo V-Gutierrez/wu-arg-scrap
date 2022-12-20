@@ -37,5 +37,5 @@ plt.savefig(
 )
 
 print(
-    f"Graph for BRL_{target_currency} updated and generated | Saved to {saving_path}"
+    f"Chart for BRL_{target_currency} updated and generated | Saved to {saving_path}"
 )
