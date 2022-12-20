@@ -12,8 +12,8 @@ const JOBS = {
     cmd: `source ${__dirname}/scripts/BRL_USD.sh --target WU-BRL-USD`
   },
   HEALTH_CHECK: {
-    cron: '*/10 * * * *',
-    cmd: `echo "[Health Check] - Online @ $(date)"; exit 0`
+    cron: '*/10 * * * * *',
+    cmd: `echo "[Health Check] - Online @ $(date)"`
   }
 }
 
