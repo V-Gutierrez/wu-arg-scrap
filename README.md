@@ -6,3 +6,4 @@
 
 ### 2.0.1
 - Python charts Generation based on time and values
+![image](https://user-images.githubusercontent.com/62355596/208725165-50a32946-5a62-4ce3-8e19-3f5f3192d1ee.png)
