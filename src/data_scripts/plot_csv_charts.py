@@ -30,7 +30,7 @@ ax.set(
     title=f"Exchange rate of {currency_pair}"
 )
 
-plt.setp(ax.get_xticklabels(), rotation=90, fontsize=6)
+plt.setp(ax.get_xticklabels(), rotation=90, fontsize=8)
 
 # Create chart and save the plot
 ax.plot(df[DATE_COLUMN], df[PRICE_COLUMN].astype('float'))
@@ -42,5 +42,5 @@ plt.savefig(
 )
 
 print(
-    f"Chart for BRL_{target_currency} updated and generated | Saved to {saving_path}"
+    f"Chart for {currency_pair} updated and generated | Saved to {saving_path}"
 )
