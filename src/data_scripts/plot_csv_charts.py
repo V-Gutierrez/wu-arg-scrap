@@ -13,8 +13,12 @@ target_currency = sys.argv[2]
 file_path = Path(f"src/databases/{target_currency}.csv").absolute()
 saving_path = Path(f"src/data_outputs/{currency_pair}_chart.png").absolute()
 
+PRICE_COLUMN = f"PRICE_{target_currency}"
+BASE_COLUMN = "BASE_BRL"
+DATE_COLUMN = "DATE"
+
 # Read the data from the CSV file
-columns = ["BASE_BRL", f"PRICE_{target_currency}", "DATE"]
+columns = [BASE_COLUMN, PRICE_COLUMN, DATE_COLUMN]
 df = pd.read_csv(file_path, delimiter=";", usecols=columns)
 
 # Add axis labels and subplot labels
@@ -26,10 +30,11 @@ ax.set(
     title=f"Exchange rate of {currency_pair}"
 )
 
-plt.setp(ax.get_xticklabels(), rotation=90, fontsize=8)
+plt.setp(ax.get_xticklabels(), rotation=90, fontsize=6)
 
 # Create chart and save the plot
-ax.plot(df["DATE"], df[f"PRICE_{target_currency}"])
+ax.plot(df[DATE_COLUMN], df[PRICE_COLUMN].astype('float'))
+
 plt.savefig(
     saving_path,
     dpi=300,

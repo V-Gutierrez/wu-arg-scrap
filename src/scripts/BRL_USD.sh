@@ -47,7 +47,7 @@ curl 'https://www.westernunion.com/wuconnect/prices/catalog' \
       echo "BASE_BRL;PRICE_$TARGET_CURRENCY;DATE" >>"src/databases/$TARGET_CURRENCY.csv"
     fi
 
-    echo "1 BRL; $WUCURRENCYVALUE $TARGET_CURRENCY; $(date "+%d-%m-%Y %T")" >>"src/databases/$TARGET_CURRENCY.csv"
+    echo "1 BRL; $WUCURRENCYVALUE; $(date "+%d-%m-%Y %T")" >>"src/databases/$TARGET_CURRENCY.csv"
     ### Storage
 
     curl "ntfy.sh/$TARGET" \
