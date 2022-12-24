@@ -1,7 +1,7 @@
 services:
   wu-node:
     build: '.'
-    command: npm run start
+    command: 'npm run start:cron'
     volumes:
       - ./:/usr/app
     container_name: 'wu-node'
