@@ -22,15 +22,17 @@ export default async function (req: IncomingMessage, res: ServerResponse<Incomin
   if (url === calledUrl && method === ROUTE_CONFIG.method) {
     try {
       execCmd(`chmod +x src/scripts/conversion/convert.sh`)
-      execCmd(`src/scripts/conversion/convert.sh ${value} ${currencyAcronyn}`, (_, stdout) => {
-
+      execCmd(`src/scripts/conversion/convert.sh ${value} ${currencyAcronyn}`, (_, stdout, stderror) => {
         res.writeHead(200, { 'Content-Type': 'application/json' })
+
+        const convertedValue = Number(stdout) * Number(value)
+
         res.write(
-          {
-            value,
-            convertedAmount: `${stdout.toString()} ${currencyAcronyn}`,
-            lastPrice: stdout.toString()
-          })
+          JSON.stringify({
+            value: `${value} ${originCurrencyAcronym}`,
+            convertedAmount: `${convertedValue} ${currencyAcronyn}`,
+            lastPrice: stdout.replace('\n', ` ${currencyAcronyn}`)
+          }))
         res.end()
       })
 

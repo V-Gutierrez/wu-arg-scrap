@@ -1,7 +1,9 @@
 services:
   wu-node:
     build: '.'
-    command: 'npm run start:cron'
+    command: 'npm run start'
     volumes:
       - ./:/usr/app
     container_name: 'wu-node'
+    ports:
+      - 5858:5858

@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 80
 
-CMD ["npm", "start:cron"]
+CMD ["npm", "start"]
