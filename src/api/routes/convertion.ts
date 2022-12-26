@@ -2,45 +2,58 @@ import type {
   IncomingMessage,
   ServerResponse
 } from 'http'
-import parseUrl from '../../helpers/parseUrl'
+
 import execCmd from '../../helpers/execCmd';
+import { Route } from '../types';
+import parseUrl from '../../helpers/parseUrl';
+import toJSON from '../../helpers/toJSON';
 
-const ROUTE_CONFIG = {
-  url: '/convertion/:originCurrencyAcronym/:currencyAcronyn/:value',
-  method: 'GET'
-}
+class ConvertionRoute implements Route {
+  constructor(
+    readonly method: string,
+    readonly routeUrl: string,
+    req: IncomingMessage,
+    res: ServerResponse
+  ) {
+    this.method = method
+    this.routeUrl = routeUrl
+    this.implementation(req, res)
+  }
 
-export default async function (req: IncomingMessage, res: ServerResponse<IncomingMessage>) {
-  const { url, method } = req
-  const { 2: originCurrencyAcronym, 3: currencyAcronyn, 4: value } = parseUrl(url as string)
-
-  const calledUrl = ROUTE_CONFIG.url
-    .replace(':originCurrencyAcronym', originCurrencyAcronym)
-    .replace(':currencyAcronyn', currencyAcronyn)
-    .replace(':value', value)
-
-  if (url === calledUrl && method === ROUTE_CONFIG.method) {
+  async implementation(req: IncomingMessage, res: ServerResponse) {
     try {
-      execCmd(`chmod +x src/scripts/conversion/convert.sh`)
-      execCmd(`src/scripts/conversion/convert.sh ${value} ${currencyAcronyn}`, (_, stdout, stderror) => {
-        res.writeHead(200, { 'Content-Type': 'application/json' })
+      const { url: receivedUrl, method } = req
+      const routeParams = parseUrl(receivedUrl as string)
+      const { 2: originCurrencyAcronym, 3: currencyAcronyn, 4: value } = routeParams
 
-        const convertedValue = Number(stdout) * Number(value)
+      const calledUrl = this.routeUrl
+        .replace(':originCurrencyAcronym', originCurrencyAcronym)
+        .replace(':currencyAcronyn', currencyAcronyn)
+        .replace(':value', value)
 
-        res.write(
-          JSON.stringify({
-            value: `${value} ${originCurrencyAcronym}`,
-            convertedAmount: `${convertedValue} ${currencyAcronyn}`,
-            lastPrice: stdout.replace('\n', ` ${currencyAcronyn}`)
-          }))
-        res.end()
-      })
+      if (receivedUrl === calledUrl && method === this.method) {
+        execCmd(`chmod +x src/scripts/conversion/convert.sh`)
+        execCmd(`src/scripts/conversion/convert.sh ${value} ${currencyAcronyn}`, (_, stdout) => {
+          res.writeHead(200, { 'Content-Type': 'application/json' })
 
+          const convertedValue = Number(stdout) * Number(value)
 
+          res.write(
+            toJSON({
+              value: `${value} ${originCurrencyAcronym}`,
+              convertedAmount: `${convertedValue} ${currencyAcronyn}`,
+              lastPrice: stdout.replace('\n', ` ${currencyAcronyn}`)
+            }))
+          res.end()
+        })
+
+      }
     } catch (error) {
       res.writeHead(500, { 'Content-Type': 'application/json' })
-      res.write('Internal Server Error')
+      res.write(toJSON({ message: "Internal Server Error", status: 500 }))
       res.end()
     }
   }
 }
+
+export default ConvertionRoute
