@@ -1,7 +1,8 @@
 
 import 'dotenv/config'
-import Cron from './cron';
+import CronScheduler from './cron';
 import Server from './api';
+import Log from './services/Log';
 
 const JOBS = [
   {
@@ -21,6 +22,9 @@ const JOBS = [
   }
 ]
 
-
-new Cron(JOBS)
-new Server()
+try {
+  new CronScheduler(JOBS)
+  new Server()
+} catch (error) {
+  Log.error('[MAIN] - Error occurred on core application', error)
+}

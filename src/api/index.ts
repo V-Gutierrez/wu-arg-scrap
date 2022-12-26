@@ -19,7 +19,7 @@ class Server {
     })
       .listen(this.PORT)
 
-    Log.info(`[API Service] Initialized Instance on port ${this.PORT}`)
+    Log.info(`[API Service] Initialized instance on port ${this.PORT}`)
   }
 }
 

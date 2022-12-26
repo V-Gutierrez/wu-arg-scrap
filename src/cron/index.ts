@@ -8,15 +8,14 @@ interface Job {
   cmd: string
 }
 
-class Cron {
+class CronScheduler {
   constructor(jobs: Job[]) {
-    Log.info('[CRON Service] Initialized Instance')
+    Log.info('[CRON Service] Initialized instance')
     this.scheduleJobs(jobs)
-
     Log.info(`[CRON Service] ${jobs.length} jobs running`)
   }
 
-  scheduleJobs(jobs: Job[]): void {
+  private scheduleJobs(jobs: Job[]): void {
     jobs.forEach(job => {
       cron.schedule(job.cron, () => {
         Log.info(`[CRON Service] Running job: ${job.jobIdentifier}`)
@@ -26,4 +25,4 @@ class Cron {
   }
 }
 
-export default Cron
+export default CronScheduler

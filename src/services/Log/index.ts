@@ -1,9 +1,18 @@
 
+import toJSON from '../../helpers/toJSON';
 class Log {
-  static info<T>(load: T) {
-    console.info(`[${new Date(Date.now())}]`, load)
+  private generateTimestamp() {
+    return new Date(Date.now())
+  }
+
+   info<T>(load: T) {
+    console.info(`[${this.generateTimestamp()}]`, load)
+  }
+
+   error<T>(message: string, load: T) {
+    console.error(message, toJSON(load))
   }
 }
 
 
-export default Log
+export default new Log()
