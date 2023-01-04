@@ -9,5 +9,5 @@ try {
   new CronScheduler(JOBS)
   new Server()
 } catch (error) {
-  Log.error('[MAIN] - Error occurred on core application', error)
+  Log.fatal('[MAIN] - Error occurred on application entry point', error)
 }
