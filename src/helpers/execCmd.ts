@@ -1,23 +1,25 @@
 import { ExecException, exec } from 'child_process'
-
-/**
- * It takes a string as an argument, and returns the result of executing the string as a command in the
- * terminal
- * @param {string} cmd - The command to be executed.
- * @returns The child process
- */
+import Log from '../services/Log'
 
 type ExecCmdCallback = (error: ExecException | null, stdout: string, stderr: string) => void
-function execCmd(cmd: string, callbackFunc?: ExecCmdCallback) {
-  const defaultCallback: ExecCmdCallback = (error, stdout, stderr) => {
+
+const defaultCallback: ExecCmdCallback = (error, stdout, stderr) => {
     if (error)
-      console.log('[Runtime Error]: ', error.message)
+      Log.error('[Runtime Error]: ', error.message)
     if (stderr)
-      console.log(stderr)
+      Log.error(stderr, stderr)
     if (stdout)
-      console.log(stdout)
+      Log.info(stdout)
   }
 
+/**
+ * It executes a command and logs the output to the console
+ * @param {string} cmd - The command to execute.
+ * @param {ExecCmdCallback} [callbackFunc] - This is the callback function that will be called when the
+ * command is executed.
+ * @returns The exec (child_proccess) function is being returned.
+ */
+function execCmd(cmd: string, callbackFunc?: ExecCmdCallback) {
   return exec(cmd, callbackFunc || defaultCallback)
 }
 
