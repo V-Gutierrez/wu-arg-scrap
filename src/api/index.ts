@@ -1,5 +1,5 @@
 import http from 'http'
-import ConvertionRoute from './routes/convertion'
+import ConvertionRoute from './routes/ConvertionRoute'
 import Log from '../services/Log'
 
 class Server {
@@ -10,11 +10,7 @@ class Server {
       Log.info(`[API Service] - ${req.method} ${req.url}`)
 
       // Routes implementation
-      new ConvertionRoute(
-        'GET',
-        '/convertion/:originCurrencyAcronym/:currencyAcronyn/:value',
-        req,
-        res)
+      new ConvertionRoute('GET', '/convertion/:originCurrencyAcronym/:currencyAcronyn/:value', req, res)
       // Routes implementation
     })
       .listen(this.PORT)

@@ -33,6 +33,7 @@ class ConvertionRoute implements Route {
 
       if (receivedUrl === calledUrl && method === this.method) {
         execCmd(`chmod +x src/scripts/conversion/convert.sh`)
+
         execCmd(`src/scripts/conversion/convert.sh ${value} ${currencyAcronyn}`, (_, stdout) => {
           res.writeHead(200, { 'Content-Type': 'application/json' })
 
@@ -44,13 +45,14 @@ class ConvertionRoute implements Route {
               convertedAmount: `${convertedValue} ${currencyAcronyn}`,
               lastPrice: stdout.replace('\n', ` ${currencyAcronyn}`)
             }))
+
           res.end()
         })
 
       }
     } catch (error) {
       res.writeHead(500, { 'Content-Type': 'application/json' })
-      res.write(toJSON({ message: "Internal Server Error", status: 500 }))
+      res.write(toJSON({ message: 'Internal Server Error', status: 500 }))
       res.end()
     }
   }

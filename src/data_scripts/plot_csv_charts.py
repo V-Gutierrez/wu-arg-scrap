@@ -24,13 +24,28 @@ df = pd.read_csv(file_path, delimiter=";", usecols=columns)
 # Add axis labels and subplot labels
 fig, ax = plt.subplots(figsize=(10, 6))
 
-ax.set(
-    xlabel="Date",
-    ylabel=f"Exchange rate to 1 BRL",
+ax.set(ylabel=f"Exchange rate to 1 BRL",
     title=f"Exchange rate of {currency_pair}"
 )
 
-plt.setp(ax.get_xticklabels(), rotation=90, fontsize=8)
+
+def set_tick_labels_size(data_len: int) -> int:
+    """ Get data lenght and returns a font_size for labels.
+        This was made to avoid data truncation in large datasets
+    """
+
+    if data_len <= 10:
+        return 8
+    elif data_len <= 12:
+        return 6
+    elif data_len <= 15:
+        return 4
+    else:
+        return 2
+
+
+plt.setp(ax.get_xticklabels(), rotation=90,
+         fontsize=set_tick_labels_size(len(df.index)))
 
 # Create chart and save the plot
 ax.plot(df[DATE_COLUMN], df[PRICE_COLUMN].astype('float'))
