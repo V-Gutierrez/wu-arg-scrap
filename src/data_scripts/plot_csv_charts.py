@@ -17,17 +17,6 @@ PRICE_COLUMN = f"PRICE_{target_currency}"
 BASE_COLUMN = "BASE_BRL"
 DATE_COLUMN = "DATE"
 
-# Read the data from the CSV file
-columns = [BASE_COLUMN, PRICE_COLUMN, DATE_COLUMN]
-df = pd.read_csv(file_path, delimiter=";", usecols=columns)
-
-# Add axis labels and subplot labels
-fig, ax = plt.subplots(figsize=(10, 6))
-
-ax.set(ylabel=f"Exchange rate to 1 BRL",
-    title=f"Exchange rate of {currency_pair}"
-)
-
 
 def set_tick_labels_size(data_len: int) -> int:
     """ Get data lenght and returns a font_size for labels.
@@ -41,7 +30,19 @@ def set_tick_labels_size(data_len: int) -> int:
     elif data_len <= 15:
         return 4
     else:
-        return 2
+        return 3
+
+
+# Read the data from the CSV file
+columns = [BASE_COLUMN, PRICE_COLUMN, DATE_COLUMN]
+df = pd.read_csv(file_path, delimiter=";", usecols=columns)
+
+# Add axis labels and subplot labels
+fig, ax = plt.subplots(figsize=(10, 6))
+
+ax.set(ylabel=f"Exchange rate to 1 BRL",
+       title=f"Exchange rate of {currency_pair}"
+       )
 
 
 plt.setp(ax.get_xticklabels(), rotation=90,
@@ -49,6 +50,8 @@ plt.setp(ax.get_xticklabels(), rotation=90,
 
 # Create chart and save the plot
 ax.plot(df[DATE_COLUMN], df[PRICE_COLUMN].astype('float'))
+
+plt.grid(True)
 
 plt.savefig(
     saving_path,

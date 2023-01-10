@@ -1,6 +1,7 @@
 
-import toJSON from '../../helpers/toJSON';
-class Log {
+import toJSON from './toJSON';
+
+class Logger {
   private generateTimestamp() {
     return new Date(Date.now())
   }
@@ -31,4 +32,4 @@ class Log {
 }
 
 
-export default new Log()
+export default new Logger()

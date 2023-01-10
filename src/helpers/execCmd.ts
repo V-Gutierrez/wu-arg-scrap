@@ -1,15 +1,15 @@
 import { ExecException, exec } from 'child_process'
-import Log from '../services/Log'
+import Logger from './logger'
 
 type ExecCmdCallback = (error: ExecException | null, stdout: string, stderr: string) => void
 
 const defaultCallback: ExecCmdCallback = (error, stdout, stderr) => {
     if (error)
-      Log.error('[Runtime Error]: ', error.message)
+      Logger.error('[Runtime Error]: ', error.message)
     if (stderr)
-      Log.error(stderr, stderr)
+      Logger.error(stderr, stderr)
     if (stdout)
-      Log.info(stdout)
+      Logger.info(stdout)
   }
 
 /**
